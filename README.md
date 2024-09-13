@@ -23,6 +23,7 @@ Option 1 using symfony cli :
 cd spotify-playlist-custom
 composer i
 symfony serve -d
+php bin/console tailwind:build --watch
 
 ```
 Option 2 use a web server like Nginx or Apache to run the application : 
@@ -31,6 +32,7 @@ Option 2 use a web server like Nginx or Apache to run the application :
 cd spotify-playlist-custom
 composer i
 php -S localhost:8000 -t public/
+php bin/console tailwind:build --watch
 
 ```
 
