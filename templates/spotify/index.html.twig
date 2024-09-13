@@ -1,20 +1,44 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello SpotifyController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% set albumImage = currentlyPlaying.item.album.images %}
+        <h1 class="text-white text-center justify-center mt-5 font-extrabold"> Currently Listening to</h1>
+        <article class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl px-8 pb-8 pt-40 max-w-sm mx-auto mt-24">
+                <img src={{ albumImage.0.url }} alt="University of Southern California" class="absolute inset-0 h-full w-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
+                <a class="z-10 mt-3 text-3xl font-bold text-white" href={{ currentlyPlaying.item.external_urls.spotify }} target="_blank" >
+                    <h3 class="z-10 mt-3 text-3xl font-bold text-white">{{ currentlyPlaying.item.name }}</h3>
+                </a>
+                <div class="flex flex-wrap space-x-2 z-10">
+                    {% for artist in currentlyPlaying.item.artists %}
+                        <a class="overflow-hidden text-sm leading-6 text-gray-300" target="_blank" href="{{ artist.external_urls.spotify }}">
+                            {{ artist.name }}
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="w-full z-10 bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                    <div id="progress-bar" class="bg-green-500 h-2.5 rounded-full" style="width: 0%;"></div>
+                </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+                <div class="flex justify-between mt-2 z-10">
+                    <!-- Affichage du temps écoulé -->
+                    <span id="current-time" class="text-sm text-white-dark"
+                          data-time="{{ currentlyPlaying.progress_ms / 1000 }}">
+                        {% set progress_seconds = currentlyPlaying.progress_ms / 1000 %}
+                        {% set progress_minutes = progress_seconds // 60 %}
+                        {% set progress_remaining_seconds = progress_seconds % 60 %}
+                        {{ "%02d:%02d"|format(progress_minutes, progress_remaining_seconds) }}
+                    </span>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/apesl7/spotify-favorite/src/Controller/SpotifyController.php</code></li>
-        <li>Your template at <code>/home/apesl7/spotify-favorite/templates/spotify/index.html.twig</code></li>
-    </ul>
-</div>
+                    <!-- Affichage de la durée totale de la chanson -->
+                    <span id="total-time" class="text-sm text-white-dark"
+                          data-duration="{{ currentlyPlaying.item.duration_ms / 1000 }}">
+                        {% set total_seconds = currentlyPlaying.item.duration_ms / 1000 %}
+                        {% set total_minutes = total_seconds // 60 %}
+                        {% set total_remaining_seconds = total_seconds % 60 %}
+                        {{ "%02d:%02d"|format(total_minutes, total_remaining_seconds) }}
+                    </span>
+                </div>
+        </article>
 {% endblock %}
