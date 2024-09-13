@@ -4,8 +4,18 @@
 An app which allows to enhence the spotify playlist 
 
 ## Getting Started
+First, add a .env.local file and inside fill these constants : 
+You can get this information from your https://developer.spotify.com/
+```bash
+###> Spotify API ###
+SPOTIFY_CLIENT_ID="your_client_id"
+SPOTIFY_CLIENT_SECRET="your_client_secret"
+SPOTIFY_REDIRECT_URI="the_redirect_uri"
+###< Spotify API ###
 
-First, run the development server:
+```
+
+Then, run the development server:
 
 Option 1 using symfony cli : 
 
