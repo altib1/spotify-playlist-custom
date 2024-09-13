@@ -29,12 +29,14 @@ class SpotifyController extends AbstractController
 
             $this->api->setAccessToken($this->cache->getItem('spotify_access_token')->get());
 
-            $top5 = $this->api->getMyTop('tracks', ['limit' => 30], ['time_range' => 'long_term']);
+            $top5 = $this->api->getMyTop('tracks', ['limit' => 5], ['time_range' => 'long_term']);
             $currentlyPlaying = $this->api->getMyCurrentTrack();
-
+            $playlists = $this->api->getMyPlaylists();
+            
             return $this->render('spotify/index.html.twig', [
                 'top5' => $top5,
-                'currentlyPlaying' => $currentlyPlaying
+                'currentlyPlaying' => $currentlyPlaying,
+                'playlists' => $playlists
             ]);
     }
 

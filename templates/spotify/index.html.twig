@@ -3,7 +3,7 @@
 {% block title %}Hello SpotifyController!{% endblock %}
 {% block body %}
 {% set albumImage = currentlyPlaying.item.album.images %}
-        <h1 class="text-white text-center justify-center mt-5 font-extrabold"> Currently Listening to</h1>
+        <h1 class="text-white text-center font-bold text-2xl mb-4"> Currently Listening to</h1>
         <article class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl px-8 pb-8 pt-40 max-w-sm mx-auto mt-24">
                 <img src={{ albumImage.0.url }} alt="University of Southern California" class="absolute inset-0 h-full w-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
@@ -41,4 +41,36 @@
                     </span>
                 </div>
         </article>
+
+
+<!-- Section des playlists -->
+<div class="mt-10">
+    <h2 class="text-white text-center font-bold text-2xl mb-4">Playlists</h2>
+    <div class="relative">
+        <!-- Conteneur pour les boutons de défilement -->
+        <button id="prev-btn" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-green-500 text-white p-2 rounded-full shadow-md z-10">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+        <button id="next-btn" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-500 text-white p-2 rounded-full shadow-md z-10">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+        <div id="playlists-container" class="flex overflow-hidden space-x-4 pb-4 px-4 snap-x snap-mandatory">
+            {% for playlist in playlists.items %}
+                <a href="{{ playlist.external_urls.spotify }}" target="_blank" class="flex-shrink-0 snap-start w-70">
+                    <div class="relative w-full h-40 bg-gray-800 rounded-lg overflow-hidden">
+                        <img src="{{ playlist.images[0].url }}" alt="{{ playlist.name }}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black opacity-60"></div>
+                        <div class="absolute bottom-0 p-4 text-white">
+                            <h3 class="text-lg font-bold">{{ playlist.name }}</h3>
+                        </div>
+                    </div>
+                </a>
+            {% else %}
+                <p class="text-gray-400 text-center">No playlists available.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}

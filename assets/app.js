@@ -34,3 +34,53 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(updateProgress, 1000);
 });
 
+
+document.addEventListener('DOMContentLoaded', function() {
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const container = document.getElementById('playlists-container');
+
+    let scrollAmount = 0;
+    const scrollStep = 300; // Distance de défilement pour chaque clic
+
+    // Duplique les éléments pour un défilement infini
+    function duplicateItems() {
+        const items = Array.from(container.children);
+        items.forEach(item => {
+            const clone = item.cloneNode(true);
+            container.appendChild(clone);
+        });
+    }
+
+    // Fonction de défilement fluide
+    function scrollContainer(direction) {
+        const containerWidth = container.scrollWidth / 2;
+        scrollAmount += direction * scrollStep;
+        
+        // Ajuste le défilement si nécessaire pour créer l'effet infini
+        if (scrollAmount > containerWidth) {
+            container.scrollLeft = 0;
+            scrollAmount = 0;
+        } else if (scrollAmount < 0) {
+            container.scrollLeft = containerWidth;
+            scrollAmount = containerWidth;
+        } else {
+            container.scrollTo({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    // Duplique les éléments au chargement
+    duplicateItems();
+
+    prevBtn.addEventListener('click', function() {
+        scrollContainer(-1);
+    });
+
+    nextBtn.addEventListener('click', function() {
+        scrollContainer(1);
+    });
+});
+
