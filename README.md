@@ -1,7 +1,7 @@
 
 # Spotify Custom Playlist
 
-An app which allows users to show the currentplaying music on spotify and the details like the current time and also shows the playlists
+An app which allows users to show the currentplaying music on spotify and the details like the current time and also shows the playlists on your webiste 
 
 ## Getting Started
 First, add a .env.local file and inside fill these constants : 
